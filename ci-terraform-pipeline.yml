@@ -10,13 +10,6 @@ pool:
   vmImage: "ubuntu-latest"
 
 stages:
-  - stage: TerraformLintAndFormat
-    displayName: "Terraform Lint and format"
-    jobs:
-      - template: pipelines-templates/jobs/terraform-lint.yml
-        parameters:
-          environment: "dev"
-          azureServiceConnection: "ARM_SUBSCRIPTION"
   - stage: TerraformValidate
     displayName: "Terraform validate"
     jobs:
