@@ -37,7 +37,7 @@ steps:
     condition: and(succeeded(), eq(${{ parameters.terraformFormat }}, true))
     inputs:
       provider: "azurerm"
-      command: validate
+      command: fmt
       workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
       environmentServiceName: ${{ parameters.azureServiceConnection }}
 
