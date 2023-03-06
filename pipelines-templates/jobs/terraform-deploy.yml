@@ -4,7 +4,7 @@ parameters:
 
   terraformValidate: false
   terraformPlan: true
-  publishTerraformPlan: true
+  terraformPublishPlan: true
   terraformApply: true
   terraformDestroy: false
 jobs:
