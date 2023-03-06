@@ -1,0 +1,6 @@
+variables:
+  environment: "dev"
+  terraformBackendResourceGroupName: "rg-tfstates-acad-eastus"
+  terraformBackendStorageAccountName: "stpaulmorostfstates"
+  terraformBackendContainerName: "crtfstatesacad002"
+  terraformBackendKey: "docker-activity/dev"

@@ -1,0 +1,87 @@
+parameters:
+  environment: "dev"
+  azureServiceConnection: "ARM_SUBSCRIPTION"
+  terraformFormat: true
+  terraformValidate: true
+  terraformPlan: false
+  terraformApply: false
+  terraformDestroy: false
+  publishTerraformPlan: false
+
+steps:
+  - checkout: self
+  - task: TerraformInstaller@0
+    displayName: "Install Terraform"
+    inputs:
+      provider: "azurerm"
+      terraformVersion: "1.3.9"
+      workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
+
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Init"
+    inputs:
+      provider: "azurerm"
+      command: init
+      workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
+      backendType: "azurerm"
+      backendServiceArm: ${{ parameters.azureServiceConnection }}
+      ensureBackend: true
+      backendAzureRmResourceGroupName: $(terraformBackendResourceGroupName)
+      backendAzureRmStorageAccountName: $(terraformBackendStorageAccountName)
+      backendAzureRmContainerName: $(terraformBackendContainerName)
+      backendAzureRmKey: $(terraformBackendKey)
+      commandOptions: "-input=false"
+
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Format"
+    condition: and(succeeded(), eq(${{ parameters.terraformFormat }}, true))
+    inputs:
+      provider: "azurerm"
+      command: validate
+      workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
+      environmentServiceName: ${{ parameters.azureServiceConnection }}
+
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Validate"
+    condition: and(succeeded(), eq(${{ parameters.terraformValidate }}, true))
+    inputs:
+      provider: "azurerm"
+      command: validate
+      workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
+      environmentServiceName: ${{ parameters.azureServiceConnection }}
+
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Plan"
+    condition: and(succeeded(), eq(${{ parameters.terraformPlan }}, true))
+    inputs:
+      provider: "azurerm"
+      command: plan
+      workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
+      commandOptions: "-no-color -input=false -out=tfplan"
+      environmentServiceNameAzureRM: ${{ parameters.azureServiceConnection }}
+
+  - task: PublishPipelineArtifact@1
+    displayName: "Publish Terraform Plan"
+    condition: and(succeeded(), eq(${{ parameters.terraformPlan }}, true))
+    inputs:
+      targetPath: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)/tfplan"
+      artifactName: tfplan
+
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Apply"
+    condition: and(succeeded(), eq(${{ parameters.terraformApply }}, true))
+    inputs:
+      provider: "azurerm"
+      command: apply
+      workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
+      commandOptions: "-input=false tfplan"
+      environmentServiceNameAzureRM: ${{ parameters.azureServiceConnection }}
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Destroy"
+    condition: and(succeeded(), eq(${{ parameters.terraformDestroy }}, true))
+    inputs:
+      provider: "azurerm"
+      command: destroy
+      workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
+      commandOptions: "-input=false -auto-approve"
+      environmentServiceNameAzureRM: ${{ parameters.azureServiceConnection }}

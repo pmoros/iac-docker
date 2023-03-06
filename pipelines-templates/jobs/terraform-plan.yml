@@ -1,0 +1,27 @@
+parameters:
+  environment: "dev"
+  azureServiceConnection: "ARM_SUBSCRIPTION"
+  terraformFormat: false
+  terraformValidate: true
+  terraformPlan: true
+  terraformApply: false
+  terraformDestroy: false
+jobs:
+  - job: terraform_plan
+    displayName: "Terraform plan"
+    pool:
+      vmImage: "ubuntu-latest"
+    variables:
+      - template: ../variables/terraform-variables.yml
+        parameters:
+          environment: $(environment)
+    steps:
+      - template: ../steps/terraform-delivery-steps.yml
+        parameters:
+          environment: ${{ parameters.environment }}
+          azureServiceConnection: ${{ parameters.azureServiceConnection }}
+            ${{ parameters. }}
+          terraformValidate: ${{ parameters.terraformValidate }}
+          terraformPlan: ${{ parameters.terraformPlan }}
+          terraformApply: ${{ parameters.terraformApply }}
+          terraformDestroy: ${{ parameters.terraformDestroy }}
