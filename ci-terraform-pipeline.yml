@@ -9,28 +9,25 @@ trigger:
 pool:
   vmImage: "ubuntu-latest"
 
-parameters:
-  environment: "dev"
-  azureServiceConnection: "ARM_SUBSCRIPTION"
 stages:
   - stage: TerraformLintAndFormat
     displayName: "Terraform Lint and format"
     jobs:
       - template: pipelines-templates/jobs/terraform-lint-and-format.yml
         parameters:
-          environment: ${{ parameters.environment }}
-          azureServiceConnection: ${{ parameters.azureServiceConnection }}
+          environment: "dev"
+          azureServiceConnection: "ARM_SUBSCRIPTION"
   - stage: TerraformValidate
     displayName: "Terraform validate"
     jobs:
       - template: pipelines-templates/jobs/terraform-validate.yml
         parameters:
-          environment: ${{ parameters.environment }}
-          azureServiceConnection: ${{ parameters.azureServiceConnection }}
+          environment: "dev"
+          azureServiceConnection: "ARM_SUBSCRIPTION"
   - stage: TerraformPlan
     displayName: "Terraform plan"
     jobs:
       - template: pipelines-templates/jobs/terraform-plan.yml
         parameters:
-          environment: ${{ parameters.environment }}
-          azureServiceConnection: ${{ parameters.azureServiceConnection }}
+          environment: "dev"
+          azureServiceConnection: "ARM_SUBSCRIPTION"
