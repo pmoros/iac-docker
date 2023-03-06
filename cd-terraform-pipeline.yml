@@ -1,0 +1,23 @@
+trigger: none
+
+pool:
+  vmImage: "ubuntu-latest"
+
+parameters:
+  environment: "dev"
+  azureServiceConnection: "ARM_SUBSCRIPTION"
+stages:
+  - stage: TerraformDeploy
+    displayName: "Terraform deploy"
+    jobs:
+      - template: ../jobs/terraform-deploy.yml
+        parameters:
+          environment: ${{ parameters.environment }}
+          azureServiceConnection: ${{ parameters.azureServiceConnection }}
+  - stage: TerraformDestroy
+    displayName: "Terraform destroy"
+    jobs:
+      - template: ../jobs/terraform-destroy.yml
+        parameters:
+          environment: ${{ parameters.environment }}
+          azureServiceConnection: ${{ parameters.azureServiceConnection }}
