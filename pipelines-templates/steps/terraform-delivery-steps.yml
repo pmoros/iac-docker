@@ -38,6 +38,7 @@ steps:
     inputs:
       provider: "azurerm"
       command: fmt
+      commandOptions: "-recursive"
       workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
       environmentServiceName: ${{ parameters.azureServiceConnection }}
 
