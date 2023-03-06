@@ -13,7 +13,7 @@ stages:
   - stage: TerraformLintAndFormat
     displayName: "Terraform Lint and format"
     jobs:
-      - template: pipelines-templates/jobs/terraform-lint-and-format.yml
+      - template: pipelines-templates/jobs/terraform-lint.yml
         parameters:
           environment: "dev"
           azureServiceConnection: "ARM_SUBSCRIPTION"
