@@ -21,7 +21,6 @@ jobs:
         parameters:
           environment: ${{ parameters.environment }}
           azureServiceConnection: ${{ parameters.azureServiceConnection }}
-            ${{ parameters. }}
           terraformValidate: ${{ parameters.terraformValidate }}
           terraformPlan: ${{ parameters.terraformPlan }}
           terraformApply: ${{ parameters.terraformApply }}
