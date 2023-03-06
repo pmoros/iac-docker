@@ -7,6 +7,7 @@ parameters:
   terraformApply: false
   terraformDestroy: false
   publishTerraformPlan: false
+  terraformPublishPlan: false
 
 steps:
   - checkout: self
@@ -55,7 +56,7 @@ steps:
 
   - task: PublishPipelineArtifact@1
     displayName: "Publish Terraform Plan"
-    condition: and(succeeded(), eq(${{ parameters.terraformPlan }}, true))
+    condition: and(succeeded(), eq(${{ parameters.terraformPublishPlan }}, true))
     inputs:
       targetPath: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)/tfplan"
       artifactName: tfplan
