@@ -1,7 +1,7 @@
 parameters:
   environment: "dev"
   azureServiceConnection: "ARM_SUBSCRIPTION"
-  terraformFormat: true
+
   terraformValidate: true
   terraformPlan: false
   terraformApply: false
@@ -32,15 +32,7 @@ steps:
       backendAzureRmKey: $(terraformBackendKey)
       commandOptions: "-input=false"
 
-  - task: TerraformTaskV4@4
-    displayName: "Terraform Format"
-    condition: and(succeeded(), eq(${{ parameters.terraformFormat }}, true))
-    inputs:
-      provider: "azurerm"
-      command: fmt
-      commandOptions: "-recursive"
-      workingDirectory: "$(System.DefaultWorkingDirectory)/infrastructure/$(environment)"
-      environmentServiceName: ${{ parameters.azureServiceConnection }}
+  # TODO: add format task
 
   - task: TerraformTaskV4@4
     displayName: "Terraform Validate"

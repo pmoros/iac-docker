@@ -1,7 +1,7 @@
 parameters:
   environment: "dev"
   azureServiceConnection: "ARM_SUBSCRIPTION"
-  terraformFormat: false
+
   terraformValidate: false
   terraformPlan: true
   terraformApply: false
