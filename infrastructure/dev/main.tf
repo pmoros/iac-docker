@@ -44,3 +44,21 @@ resource "azurerm_key_vault" "kv" {
 
   tags = var.tags
 }
+
+# Key vault access policies for users
+resource "azurerm_key_vault_access_policy" "defined_access_policy" {
+  for_each     = toset(concat(var.object_ids, [data.azurerm_client_config.current.object_id]))
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = each.value
+
+  key_permissions = [
+    "Get", "Update", "Delete", "List", "Encrypt", "Decrypt",
+  ]
+
+  secret_permissions = [
+    "Get", "Delete", "List", "Set", "Recover", "Backup", "Restore", "Purge"
+  ]
+
+  depends_on = [azurerm_key_vault.kv]
+}
