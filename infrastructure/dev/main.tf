@@ -28,8 +28,9 @@ resource "azurerm_key_vault" "kv" {
 
   sku_name = var.keyvault_sku
 
+  # ! Allowing access from all networks
   network_acls {
-    default_action             = "Deny"
+    default_action             = "Allow"
     bypass                     = "AzureServices"
     ip_rules                   = []
     virtual_network_subnet_ids = []
@@ -52,6 +53,4 @@ resource "azurerm_key_vault_access_policy" "defined_access_policy" {
   secret_permissions = [
     "Get", "Delete", "List", "Set", "Recover", "Backup", "Restore", "Purge"
   ]
-
-  depends_on = [azurerm_key_vault.kv]
 }

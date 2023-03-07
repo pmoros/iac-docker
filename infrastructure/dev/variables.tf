@@ -46,3 +46,16 @@ variable "administrator_login" {
   type        = string
   description = "The administrator username of the SQL Server."
 }
+
+
+variable "database_sku" {
+  type        = string
+  default     = "GP_Standard_D2ds_v4"
+  description = "Database SKU"
+}
+
+variable "database_zone" {
+  type        = string
+  default     = "3"
+  description = "Database Zone"
+}

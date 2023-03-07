@@ -20,3 +20,5 @@ object_ids = [
 
 # Database
 administrator_login = "paulmoros"
+database_sku        = "GP_Standard_D2ds_v4"
+database_zone       = "3"
