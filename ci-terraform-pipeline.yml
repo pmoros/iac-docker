@@ -2,6 +2,8 @@ trigger:
   branches:
     include:
       - "*"
+    exclude:
+      - "main"
   paths:
     exclude:
       - "README.md"
