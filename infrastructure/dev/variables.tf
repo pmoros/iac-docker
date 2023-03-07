@@ -59,3 +59,10 @@ variable "database_zone" {
   default     = "3"
   description = "Database Zone"
 }
+
+# services
+variable "web_app_sku_name" {
+  type        = string
+  default     = "B1"
+  description = "SKU name"
+}

@@ -24,3 +24,6 @@ object_ids = [
 administrator_login = "paulmoros"
 database_sku        = "GP_Standard_D2ds_v4"
 database_zone       = "3"
+
+# Services
+web_app_sku_name = "B1"
