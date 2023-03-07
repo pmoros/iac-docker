@@ -1,6 +1,6 @@
 # Credentials
 resource "random_password" "database_password" {
-  length           = 16
+  length           = 8
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
@@ -12,27 +12,21 @@ resource "azurerm_mysql_flexible_server" "mysql" {
   location               = var.location
   administrator_login    = var.administrator_login
   administrator_password = random_password.database_password.result
+  zone                   = var.database_zone
+  version                = "8.0.21"
   identity {
     type = "SystemAssigned"
   }
-  tags = var.tags
+  sku_name = var.database_sku
+  tags     = var.tags
 }
 
 # Disable secure transport
 resource "azurerm_mysql_flexible_server_configuration" "mysql" {
   server_name         = azurerm_mysql_flexible_server.mysql.name
   resource_group_name = azurerm_resource_group.rg.name
-  name                = "disable_secure_transport"
+  name                = "require_secure_transport"
   value               = "OFF"
-}
-
-# Allow Azure services
-resource "azurerm_mysql_firewall_rule" "azure-services" {
-  name                = "allow-azure-services"
-  resource_group_name = azurerm_resource_group.rg.name
-  server_name         = azurerm_mysql_flexible_server.mysql.name
-  start_ip_address    = "0.0.0.0"
-  end_ip_address      = "0.0.0.0"
 }
 
 # Store database credentials in key vault
@@ -44,7 +38,6 @@ resource "azurerm_key_vault_secret" "db_username" {
   depends_on = [azurerm_key_vault_access_policy.defined_access_policy]
 }
 
-
 resource "azurerm_key_vault_secret" "db_password" {
   name         = "dbpassword"
   value        = random_password.database_password.result
@@ -54,7 +47,7 @@ resource "azurerm_key_vault_secret" "db_password" {
 }
 
 # Create database
-resource "azurerm_mysql_database" "todos" {
+resource "azurerm_mysql_flexible_database" "todos" {
   name                = "todos"
   resource_group_name = azurerm_resource_group.rg.name
   server_name         = azurerm_mysql_flexible_server.mysql.name
