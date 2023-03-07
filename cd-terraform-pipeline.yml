@@ -12,10 +12,3 @@ stages:
         parameters:
           environment: "dev"
           azureServiceConnection: "ARM_SUBSCRIPTION"
-  - stage: TerraformDestroy
-    displayName: "Terraform destroy"
-    jobs:
-      - template: pipelines-templates/jobs/terraform-destroy.yml
-        parameters:
-          environment: "dev"
-          azureServiceConnection: "ARM_SUBSCRIPTION"
