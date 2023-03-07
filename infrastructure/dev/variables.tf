@@ -40,3 +40,9 @@ variable "keyvault_sku" {
   default     = "standard"
   description = "Key Vault SKU"
 }
+
+# Database
+variable "administrator_login" {
+  type        = string
+  description = "The administrator username of the SQL Server."
+}

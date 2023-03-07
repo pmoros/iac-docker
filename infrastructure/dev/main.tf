@@ -17,13 +17,6 @@ resource "azurerm_resource_group" "rg" {
   tags     = var.tags
 }
 
-# Credentials
-resource "random_password" "database_password" {
-  length           = 16
-  special          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
-}
-
 # Key vault
 resource "azurerm_key_vault" "kv" {
   name                        = "kv${var.owner}${var.project}${var.environment}"

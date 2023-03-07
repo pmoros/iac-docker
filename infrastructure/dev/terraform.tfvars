@@ -17,3 +17,6 @@ object_ids = [
   "34dec84a-67fb-42b8-b7cf-64998f2ed072",
   "95c7d29c-45e7-4171-8356-525ac9c3e85a"
 ]
+
+# Database
+administrator_login = "paulmoros"
