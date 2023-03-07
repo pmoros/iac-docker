@@ -10,6 +10,5 @@ tags = {
   location    = "eastus"
 }
 
-# Storage Account
-account_tier             = "Standard"
-account_replication_type = "LRS"
+# Key Vault
+keyvault_sku = "standard"

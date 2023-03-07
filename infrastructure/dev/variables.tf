@@ -28,15 +28,15 @@ variable "tags" {
   description = "Tags"
 }
 
-# Storage Account
-variable "account_tier" {
-  type        = string
-  default     = "Standard"
-  description = "The tier of the storage account."
+# Key Vault
+variable "object_ids" {
+  type        = list(string)
+  default     = []
+  description = "Object IDs"
 }
 
-variable "account_replication_type" {
+variable "keyvault_sku" {
   type        = string
-  default     = "LRS"
-  description = "The replication type of the storage account."
+  default     = "standard"
+  description = "Key Vault SKU"
 }
