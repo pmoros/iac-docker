@@ -1,5 +1,6 @@
-project = "activity4"
-location = "eastus"
+owner       = "paulmoros"
+project     = "activity4"
+location    = "eastus"
 environment = "dev"
 # Tags
 tags = {
@@ -8,3 +9,7 @@ tags = {
   lob         = "acad"
   location    = "eastus"
 }
+
+# Storage Account
+account_tier             = "Standard"
+account_replication_type = "LRS"
