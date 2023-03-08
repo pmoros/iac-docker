@@ -54,3 +54,18 @@ resource "azurerm_key_vault_access_policy" "defined_access_policy" {
     "Get", "Delete", "List", "Set", "Recover", "Backup", "Restore", "Purge"
   ]
 }
+
+# Key vault access policies for service principals
+resource "azurerm_key_vault_access_policy" "service_principal_access_policy" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_linux_web_app.web_app.identity[0].principal_id
+
+  key_permissions = [
+    "Get", "Update", "Delete", "List", "Encrypt", "Decrypt",
+  ]
+
+  secret_permissions = [
+    "Get", "Delete", "List", "Set", "Recover", "Backup", "Restore", "Purge"
+  ]
+}

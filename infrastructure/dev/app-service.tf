@@ -29,14 +29,21 @@ resource "azurerm_linux_web_app" "web_app" {
 
   app_settings = {
     DOCKER_REGISTRY_SERVER_URL      = azurerm_container_registry.acr.login_server
-    DOCKER_REGISTRY_SERVER_USERNAME = azurerm_container_registry.acr.admin_username
-    DOCKER_REGISTRY_SERVER_PASSWORD = azurerm_container_registry.acr.admin_password
+    DOCKER_REGISTRY_SERVER_USERNAME = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault.kv.vault_uri}secrets/cradminusername/)"
+    DOCKER_REGISTRY_SERVER_PASSWORD = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault.kv.vault_uri}secrets/cradminpassword/)"
     MYSQL_HOST                      = azurerm_mysql_flexible_server.mysql.fqdn
     MYSQL_DB                        = azurerm_mysql_flexible_database.todos.name
-    MYSQL_PASSWORD                  = random_password.database_password.result
-    MYSQL_USER                      = var.administrator_login
+    MYSQL_USER                      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault.kv.vault_uri}secrets/dbusername/)"
+    MYSQL_PASSWORD                  = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault.kv.vault_uri}secrets/dbpassword/)"
     WEBSITES_PORT                   = var.web_app_port
   }
+
+  depends_on = [
+    azurerm_key_vault_secret.container_registry_admin_username,
+    azurerm_key_vault_secret.container_registry_admin_password,
+    azurerm_key_vault_secret.db_username,
+    azurerm_key_vault_secret.db_password
+  ]
 
 }
 
