@@ -27,3 +27,4 @@ database_zone       = "3"
 
 # Services
 web_app_sku_name = "B1"
+web_app_port     = 3000
