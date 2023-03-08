@@ -66,3 +66,9 @@ variable "web_app_sku_name" {
   default     = "B1"
   description = "SKU name"
 }
+
+variable "web_app_port" {
+  type        = number
+  default     = 8080
+  description = "Web App Port"
+}

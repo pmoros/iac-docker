@@ -15,7 +15,6 @@ resource "azurerm_linux_web_app" "web_app" {
 
   identity {
     type = "SystemAssigned"
-
   }
 
   site_config {
@@ -38,7 +37,6 @@ resource "azurerm_linux_web_app" "web_app" {
     MYSQL_USER                      = var.administrator_login
     WEBSITES_PORT                   = var.web_app_port
   }
-
 
 }
 
