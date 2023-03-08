@@ -12,3 +12,12 @@ stages:
         parameters:
           environment: "dev"
           azureServiceConnection: "ARM_SUBSCRIPTION"
+  - stage: TerraformUndo
+    displayName: "Terraform Destroy"
+    dependsOn: TerraformDeploy
+    condition: failed()
+    jobs:
+      - template: pipelines-templates/jobs/terraform-destroy.yml
+        parameters:
+          environment: "dev"
+          azureServiceConnection: "ARM_SUBSCRIPTION"

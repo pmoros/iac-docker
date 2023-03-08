@@ -19,11 +19,11 @@ resource "azurerm_resource_group" "rg" {
 
 # Key vault
 resource "azurerm_key_vault" "kv" {
-  name                        = "kv${var.owner}${var.project}${var.environment}"
+  name                        = "kv${var.owner}${var.project}${var.environment}001"
   location                    = var.location
   resource_group_name         = azurerm_resource_group.rg.name
   enabled_for_disk_encryption = true
-  purge_protection_enabled    = true
+  purge_protection_enabled    = false
   tenant_id                   = data.azurerm_client_config.current.tenant_id
 
   sku_name = var.keyvault_sku
