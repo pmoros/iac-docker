@@ -1,4 +1,4 @@
-owner       = "paulmoros"
+owner       = "pmoros"
 project     = "activity4"
 location    = "eastus"
 environment = "dev"
