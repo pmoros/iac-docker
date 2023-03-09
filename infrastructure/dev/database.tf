@@ -54,3 +54,12 @@ resource "azurerm_mysql_flexible_database" "todos" {
   charset             = "utf8"
   collation           = "utf8_unicode_ci"
 }
+
+resource "azurerm_mysql_flexible_server_firewall_rule" "allowed_db_ips" {
+  for_each            = var.allowed_db_ips
+  name                = "dballowedips"
+  resource_group_name = azurerm_resource_group.rg.name
+  server_name         = azurerm_mysql_flexible_server.mysql.name
+  start_ip_address    = each.value
+  end_ip_address      = each.value
+}
