@@ -14,7 +14,7 @@ stages:
         steps:
           - task: Docker@2
             inputs:
-              containerRegistry: "cractivity4"
+              containerRegistry: "crpmorosactivity4dev001"
               repository: "todolist"
               command: "build"
               Dockerfile: "**/app/Dockerfile"
@@ -24,7 +24,7 @@ stages:
             inputs:
               command: "Scan"
               xrayConnection: "jfrog-xray"
-              imageName: "cractivity4dev.azurecr.io/todolist:latest"
+              imageName: "crpmorosactivity4dev001.azurecr.io/todolist:latest"
               watchesSource: "none"
               licenses: false
               allowFailBuild: true
@@ -33,7 +33,7 @@ stages:
 
           - task: Docker@2
             inputs:
-              containerRegistry: "cractivity4"
+              containerRegistry: "crpmorosactivity4dev001"
               repository: "todolist"
               command: "push"
               tags: "latest"
@@ -50,4 +50,4 @@ stages:
             inputs:
               azureSubscription: "ARM_SUBSCRIPTION"
               appName: "wa-activity4-dev-eastus"
-              containers: "cractivity4dev.azurecr.io/todolist:latest"
+              containers: "crpmorosactivity4dev001.azurecr.io/todolist:latest"
