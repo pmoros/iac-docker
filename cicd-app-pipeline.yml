@@ -19,7 +19,12 @@ stages:
               command: "build"
               Dockerfile: "**/app/Dockerfile"
               tags: "latest"
-
+          - task: Docker@2
+            inputs:
+              containerRegistry: "crpmorosactivity4dev001"
+              repository: "todolist"
+              command: "push"
+              tags: "latest"
           - task: JFrogDocker@1
             inputs:
               command: "Scan"
@@ -30,13 +35,6 @@ stages:
               allowFailBuild: true
               threads: "3"
               skipLogin: false
-
-          - task: Docker@2
-            inputs:
-              containerRegistry: "crpmorosactivity4dev001"
-              repository: "todolist"
-              command: "push"
-              tags: "latest"
 
   - stage: Deploy
     displayName: Deploy to Web App
