@@ -60,6 +60,12 @@ variable "database_zone" {
   description = "Database Zone"
 }
 
+variable "allowed_db_ips" {
+  type        = set(string)
+  default     = []
+  description = "Allowed IPs"
+}
+
 # services
 variable "web_app_sku_name" {
   type        = string

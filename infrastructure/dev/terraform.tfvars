@@ -20,6 +20,9 @@ object_ids = [
   "1a972602-9873-4568-b83a-2b7c18de18f0"
 ]
 
+# ! WARNING ! - This is a public IP address.  This is only for demo purposes.
+allowed_db_ips = ["181.59.222.254"]
+
 # Database
 administrator_login = "paulmoros"
 database_sku        = "GP_Standard_D2ds_v4"
